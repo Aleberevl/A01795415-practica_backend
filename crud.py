@@ -145,13 +145,6 @@ print("\n--- 4. Leyendo un resumen específico y listando de nuevo ---")
 summary_1_details = read_summary_by_id(id_resumen_1)
 print(f"Detalles del Resumen 1 después de actualizar:\n{summary_1_details}")
 
-print("\n--- 5. Eliminando el Resumen 2 ---")
-delete_summary(id_resumen_2)
-
-print("\n--- 6. Leyendo resúmenes después de los cambios ---")
-print("Resúmenes finales:")
-for s in read_summaries():
-    print(f" - {s}")
 
 # Cerrar la conexión
 print("\nCerrando conexión a la base de datos.")
