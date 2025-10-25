@@ -16,7 +16,7 @@ Antes de comenzar, asegúrate de tener:
 Para iniciar una instancia de **MySQL** en un contenedor Docker, ejecuta el siguiente comando en la terminal de tu **GitHub Codespace**:
 
 ```sh
-docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=contrasena -e MYSQL_DATABASE=testdb -p 3306:3306 -d mysql:latest
+docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=contrasena -e MYSQL_DATABASE=dofdb -p 3306:3306 -d mysql:latest
 ```
 
 ### Conectarse al contenedor a través de la herramienta de linea de comandos
@@ -27,14 +27,21 @@ Luego, ingresa la contraseña que configuraste (contrasena).
 
 ### Dentro de mysql ejecuta
 ```sh
-USE testdb;
+USE dofdb;
 ```
 
 ```sh
-CREATE TABLE jedi (
-    id_jedi INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_jedi VARCHAR(100) NOT NULL,
-    email_jedi VARCHAR(100) UNIQUE NOT NULL
+CREATE TABLE IF NOT EXISTS summaries (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  object_type ENUM('publication','section','item','chunk') NOT NULL,
+  object_id BIGINT NOT NULL,
+  model VARCHAR(100) NOT NULL,
+  model_version VARCHAR(50),
+  lang VARCHAR(10) DEFAULT 'es',
+  summary_text TEXT,
+  confidence DECIMAL(5,2),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  created_by VARCHAR(100) NULL
 );
 ```
 **Para salir escriba *quit*** y presione enter
