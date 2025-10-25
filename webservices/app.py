@@ -14,7 +14,7 @@ CORS(app)
 # ----------------------------------------------------------------------
 
 DB_CONFIG = {
-    "host": "localhost",
+    "host": "127.0.0.1",
     "user": "root",
     "password": "contrasena",
     "database": "dofdb",
@@ -206,4 +206,4 @@ def delete_summary(summary_id):
 
 if __name__ == '__main__':
     print("Servidor Flask iniciado. Accede a http://127.0.0.1:5000")
-    app.run(host = "0.0.0.0"", port=8000, debug=True)
+    app.run(port=8000, debug=True)
