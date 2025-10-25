@@ -1,4 +1,4 @@
-# Servicios Web CRUD para tabla en MySQL
+# Servicios Web CRUD para tabla Summaries en MySQL
 
 Este repositorio contiene un ejercicio de conexión a una instancia de **MySQL** que corre dentro de un contenedor Docker en **GitHub Codespaces** utilizando el paquete **mysql-connector-python** para Python.
 
@@ -58,7 +58,7 @@ Esto creará un par de registros en la tabla
 
 ## Prerequisitos
 
-- Existe la table jedi
+- Existe la table Summaries
 
 
 ### Ejecución de servidor de servicios web
@@ -79,30 +79,49 @@ Esto ejecutará los servicios web, puerto 8000
 
 Abra **otra terminal**  (no cierre la terminal que está ejecutando el servidor), y ejecute el siguiente comando para obtener todos los jedis:
 ```sh
-curl -X GET http://127.0.0.1:8000/jedis
-```
-Agregar un jedi:
-```sh
-curl -X POST http://127.0.0.1:8000/jedis -H "Content-Type: application/json" -d '{"nombre_jedi": "Grogu", "email_jedi": "grogu@gmail.com"}'
+curl -X GET http://127.0.0.1:8000/summaries
 ```
 
-Actualizar un jedi:
+Postear una entrada:
 ```sh
-curl -X PUT http://127.0.0.1:8000/jedis/1 -H "Content-Type: application/json" -d '{"nombre_jedi": "Hijo de Anakin", "email_jedi": "luke@gmail.com", "age": 26}'
-```
+curl -X POST \
+     -H "Content-Type: application/json" \
+     -d '{
+         "object_type": "publication",
+         "object_id": 20241024001,
+         "model": "GPT-4o",
+         "model_version": "1.2",
+         "lang": "es",
+         "summary_text": "Resumen conciso del Acuerdo sobre horarios de trabajo publicado en el DOF. Se enfatiza la flexibilidad.",
+         "confidence": 0.97,
+         "created_by": "API_Tester"
+     }' \
+     http://127.0.0.1:8000/summaries```
 
-Borrar un jedi:
+
+Actualizar una entrada:
 ```sh
-curl -X DELETE http://127.0.0.1:8000/jedis/3
+curl -X PUT \
+     -H "Content-Type: application/json" \
+     -d '{
+         "confidence": 0.99,
+         "summary_text": "El texto del resumen ha sido revisado y mejorado para ser más fácil de entender."
+     }' \
+     http://127.0.0.1:8000/summaries/1```
+
+
+Borrar una entrada:
+```sh
+curl -X DELETE http://127.0.0.1:8000/summaries/2
 ```
 
 # Respaldo y restauración de base de datos
 Respaldo
 ```sh
-docker exec mysql-container mysqldump -u root -pcontrasena testdb > backup.sql
+docker exec mysql-container mysqldump -u root -pcontrasena dofdb > backup.sql
 ```
 
 Restauración
 ```sh
-docker exec -i mysql-container mysql -u root -pcontrasena testdb < backup.sql
+docker exec -i mysql-container mysql -u root -pcontrasena dofdb < backup.sql
 ```
